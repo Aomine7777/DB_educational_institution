@@ -92,12 +92,12 @@ public class Lesson {
     @Override
     public String toString() {
         return "Lesson{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", students=" + students +
-                ", isStudentPresent=" + isStudentPresent +
-                ", mark=" + mark +
-                ", date=" + date +
-                '}';
+                "\n id=" + id +
+                ",\n name='" + name + '\'' +
+                ",\n students=" + students +
+                ",\n isStudentPresent=" + isStudentPresent +
+                ",\n mark=" + mark +
+                ",\n date=" + date +
+                "\n}";
     }
 }

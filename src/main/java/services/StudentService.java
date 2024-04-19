@@ -35,11 +35,11 @@ public class StudentService extends StudentRepository {
             newStudent.setName(newStudentName);
             newStudent.setUserName(inputUserName);
 
-            Optional<Student> savedStudentOptional = studentRepository.save(newStudent);
+            Student savedStudent = studentRepository.save(newStudent);
 
-            if (savedStudentOptional.isPresent()) {
+            if (savedStudent != null) {
                 System.out.println("Новий студент успішно створений!");
-                System.out.println("Id нового студента: " + savedStudentOptional.get().getId());
+                System.out.println("Id нового студента: " + savedStudent.getId());
             } else {
                 System.out.println("Помилка при створенні нового студента");
             }

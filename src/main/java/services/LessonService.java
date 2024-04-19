@@ -2,10 +2,8 @@ package services;
 
 import entities.Lesson;
 import entities.Student;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import repository.LessonRepository;
@@ -14,7 +12,7 @@ import repository.StudentRepository;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.*;
-import java.util.stream.Collectors;
+
 
 public class LessonService extends LessonRepository {
 
@@ -67,13 +65,13 @@ public class LessonService extends LessonRepository {
             System.out.println("Введіть наступний id студента (0 - завершити):");
         }
         lessonRepository.save(newLesson);
-        System.out.println("Урок умпішно додано.");
+        System.out.println("Урок уcпішно додано.");
     }
 
     public void printLimitedLessons() {
-        System.out.println("Введи ліміт отриманих уроків");
-        int limit = scanner.nextInt();
         try {
+            System.out.println("Введи ліміт отриманих уроків");
+            int limit = scanner.nextInt();
             List<Lesson> lessons = lessonRepository.fetchLimitedLessons(limit);
             printLessons(lessons);
         } catch (Exception e) {
@@ -83,10 +81,10 @@ public class LessonService extends LessonRepository {
 
 
     public void printLimitedLessonsByDate() {
-        System.out.println("Введіть дату уроку (рік-місяць-день):");
-        String inputDate = scanner.nextLine();
-        LocalDate date = LocalDate.parse(inputDate);
         try {
+            System.out.println("Введіть дату уроку (рік-місяць-день):");
+            String inputDate = scanner.nextLine();
+            LocalDate date = LocalDate.parse(inputDate);
             List<Lesson> lessons = getByDate(date);
 
             printLessons(lessons);
@@ -95,19 +93,11 @@ public class LessonService extends LessonRepository {
         } catch (Exception e) {
             LOGGER.error("Error occurred while printing limited lessons", e);
         }
-
-
     }
 
     public void printLessons(List<Lesson> lessons) {
         for (Lesson lesson : lessons) {
-            System.out.println("ID: " + lesson.getId());
-            System.out.println("Name: " + lesson.getName());
-            System.out.println("Student ID: " + lesson.getStudents().stream().map(Student::getId).collect(Collectors.toList()));
-            System.out.println("Is Student Present: " + lesson.isStudentPresent());
-            System.out.println("Mark: " + lesson.getMark());
-            System.out.println("Date: " + lesson.getDate());
-            System.out.println();
+            System.out.println(lesson.toString());
         }
     }
 
@@ -133,7 +123,7 @@ public class LessonService extends LessonRepository {
             System.out.println("Введіть значення середньої оцінки:");
             float averageMark = scanner.nextFloat();
 
-            List<Lesson> lessons = getByStudentAverageMArk(averageMark, lessonId);
+            List<Lesson> lessons = getByStudentAverageMark(averageMark, lessonId);
             printLessons(lessons);
         } catch (InputMismatchException e) {
             System.out.println("Некоректний формат введених даних!");
@@ -143,20 +133,20 @@ public class LessonService extends LessonRepository {
     }
 
     public void printLessonsByDateAndAverageMark() {
-            try {
-                System.out.println("Введіть дату уроків (рік-місяць-день):");
-                String inputDate = scanner.nextLine();
-                LocalDate date = LocalDate.parse(inputDate);
+        try {
+            System.out.println("Введіть дату уроків (рік-місяць-день):");
+            String inputDate = scanner.nextLine();
+            LocalDate date = LocalDate.parse(inputDate);
 
-                System.out.println("Введіть значення середньої оцінки:");
-                float averageMark = scanner.nextFloat();
+            System.out.println("Введіть значення середньої оцінки:");
+            float averageMark = scanner.nextFloat();
 
-                List<Lesson> lessons = getByStudentAverageMArkAndDAte(averageMark,date);
-                printLessons(lessons);
-            } catch (DateTimeParseException e) {
-                System.out.println("Некоректна дата! Будь ласка, введіть дату у форматі рік-місяць-день (наприклад, 2024-04-05).");
-            } catch (Exception e) {
-                LOGGER.error("Error occurred while printing limited lessons", e);
-            }
+            List<Lesson> lessons = getByStudentAverageMarkAndDate(averageMark, date);
+            printLessons(lessons);
+        } catch (DateTimeParseException e) {
+            System.out.println("Некоректна дата! Будь ласка, введіть дату у форматі рік-місяць-день (наприклад, 2024-04-05).");
+        } catch (Exception e) {
+            LOGGER.error("Error occurred while printing limited lessons", e);
         }
     }
+}

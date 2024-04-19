@@ -1,12 +1,10 @@
 package org.start_Application;
 
-import entities.Student;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import services.LessonService;
 import services.StudentService;
 
-import java.util.Optional;
 import java.util.Scanner;
 
 public class AppLauncher {
@@ -14,8 +12,9 @@ public class AppLauncher {
     static LessonService lessonService = new LessonService(factory);
     static StudentService studentService = new StudentService(factory);
     static Scanner scanner = new Scanner(System.in);
+
     public static void main(String[] args) {
-        while (true){
+        while (true) {
             System.out.println("Меню");
             System.out.println("Обери 0, якщо бажаешь додати студента");
             System.out.println("Обери 1, якщо бажаешь додати урок");
@@ -28,23 +27,14 @@ public class AppLauncher {
             int userChoice = scanner.nextInt();
             scanner.nextLine();
 
-            switch (userChoice){
-                case 0:
-                    studentService.createStudent();
-                case 1:
-                    lessonService.createLesson();
-                case 2:
-                 lessonService.printLimitedLessons();
-                case 3:
-                    lessonService.printLimitedLessonsByDate();
-
-                case 4:
-                     lessonService.printLessonsByStudentId();
-
-                case 5:
-                     lessonService.printLessonsByLessonIdAndAverageMark();
-                case 6:
-                    lessonService.printLessonsByDateAndAverageMark();
+            switch (userChoice) {
+                case 0 -> studentService.createStudent();
+                case 1 -> lessonService.createLesson();
+                case 2 -> lessonService.printLimitedLessons();
+                case 3 -> lessonService.printLimitedLessonsByDate();
+                case 4 -> lessonService.printLessonsByStudentId();
+                case 5 -> lessonService.printLessonsByLessonIdAndAverageMark();
+                case 6 -> lessonService.printLessonsByDateAndAverageMark();
             }
 
         }
